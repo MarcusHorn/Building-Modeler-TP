@@ -1,0 +1,46 @@
+=== General Approach ===
+
+To generate a 3-D model of a building, my program stores the 'rooms' as objects
+under a synonymous class, which are assigned a location, width, height, and
+depth. The program itself determines what a new room's location will be
+based on where the previous room was and the new room's connection to that
+room and its dimensions. The program ensures that the rooms will be neatly
+connected via one of their doors, sharing a single side. The functions for this
+are run under createNewRoom, which randomly assigns dimensions from 25-50 and up
+to three doors on the room if the program is in Random Generation mode,
+otherwise, the camera would use a panorama created in PanoramaStitching.py
+to determine what these dimensions should be and where doors are.
+
+In order to display the model, the program runs threeDIfy and drawRect to 
+calculate the canvas' placement of the surfaces based on the current rotation 
+values of each room. For my application, I heavily modified these provided
+functions to provide much more realism and convenience to the program. For
+example, the base code caused each room to rotate only around its own axis.
+My modifications cause them to rotate around the center of mass of the entire
+model, which is recalculated each time a room is added or removed with
+updateCenter. The various view modification options simply apply various changes
+to the existing parameters: zooming applies a scalar multiplier to each point's
+distance from the model center, panning simply shifts the location of each room,
+and rotating increments or decrements the existing rotX and rotY parameters.
+
+=== UI Design ===
+
+The UI looks as it does in order to emulate a CAD Program of sorts (i.e. Rhino,
+AutoCAD, etc.) in line with the program's intended functionality as an
+engineering/architecture utility. As such, I included the compass and scale
+widgets since they are a common feature of these programs. Additionally, as a 
+product of feedback I received, I included buttons along the right side to 
+perform the view modifications while keeping the keyboard commands in order to
+provide more convenience to the user. As well, the program generates dots as
+nodes for the user to select where they place their next room so as to allow
+for greater interaction than simply a truly random creation. Finallly,
+I included the two buttons in the top right corner, for the help screen and
+solid view, since these are primary features for a CAD program. They are of 
+significant size in order to make their functions more obvious.
+
+The help screen itself is purposely kept concise and easy to switch to and from
+as a marked change from how most CAD program help systems are, which often
+contain hundreds of pages for different topics. I purposely aimed to limit the
+number of keybindings used to fit into a single page of information. Usually,
+CAD programs will have about 50 different CTRL+ commands for shortcuts, which
+are incredibly hard to memorize.
